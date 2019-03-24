@@ -1,0 +1,22 @@
+PODS:
+  - admob_util (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - admob_util (from `.symlinks/plugins/admob_util/ios`)
+  - Flutter (from `.symlinks/flutter/ios`)
+
+EXTERNAL SOURCES:
+  admob_util:
+    :path: ".symlinks/plugins/admob_util/ios"
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+
+SPEC CHECKSUMS:
+  admob_util: fd53c9527869bc6df2c0f34bcab90895b648a7f6
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+
+PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
+
+COCOAPODS: 1.6.1

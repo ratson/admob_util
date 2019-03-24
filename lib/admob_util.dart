@@ -7,7 +7,9 @@ class AdmobUtil {
       const MethodChannel('admob_util');
 
   static Future<bool> get isTestDevice async {
-    final bool isTestDevice = await _channel.invokeMethod('isTestDevice');
-    return isTestDevice;
+    try {
+      return await _channel.invokeMethod('isTestDevice');
+    } on PlatformException {}
+    return false;
   }
 }

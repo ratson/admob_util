@@ -1,14 +1,11 @@
 # admob_util
 
-A new flutter plugin project.
+A flutter plugin to provide AdMob utility.
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.io/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+```dart
+import 'package:admob_util/admob_util.dart';
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+bool isTestDevice = await AdmobUtil.isTestDevice;
+```

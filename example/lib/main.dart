@@ -22,13 +22,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initAppState() async {
-    bool isTestDevice;
-
-    try {
-      isTestDevice = await AdmobUtil.isTestDevice;
-    } on PlatformException {
-      isTestDevice = false;
-    }
+    bool isTestDevice = await AdmobUtil.isTestDevice;
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling

@@ -16,7 +16,13 @@ class _BannerStateHolder extends InheritedWidget {
 }
 
 class SimpleBannerAd extends StatefulWidget {
-  SimpleBannerAd({Key key, @required this.child, @required this.adUnitId, this.targetingInfo, this.listener}) : super(key: key);
+  SimpleBannerAd(
+      {Key key,
+      @required this.child,
+      @required this.adUnitId,
+      this.targetingInfo,
+      this.listener})
+      : super(key: key);
 
   final Widget child;
   final String adUnitId;
@@ -35,9 +41,7 @@ class SimpleBannerAd extends StatefulWidget {
 
 class SimpleBannerAdState extends State<SimpleBannerAd> {
   BannerAd _bannerAd;
-
-  // states
-  bool _adShown = false;
+  Size _bannerSize;
 
   @override
   void initState() {
@@ -50,6 +54,8 @@ class SimpleBannerAdState extends State<SimpleBannerAd> {
   @override
   void dispose() {
     _bannerAd?.dispose();
+    _bannerAd = null;
+    _bannerSize = null;
 
     super.dispose();
   }
@@ -58,7 +64,8 @@ class SimpleBannerAdState extends State<SimpleBannerAd> {
   Widget build(BuildContext context) {
     return Padding(
       child: _BannerStateHolder(state: this, child: widget.child),
-      padding: EdgeInsets.only(bottom: _adShown ? 50.0 : 0),
+      padding: EdgeInsets.only(
+          bottom: _bannerSize == null ? 0 : _bannerSize.height),
     );
   }
 
@@ -67,18 +74,19 @@ class SimpleBannerAdState extends State<SimpleBannerAd> {
       adUnitId: widget.adUnitId,
       size: AdSize.smartBanner,
       targetingInfo: widget.targetingInfo,
-      listener: (MobileAdEvent event) {
+      listener: (MobileAdEvent event) async {
         if (widget.listener != null) {
           widget.listener(event);
         }
 
         if (event == MobileAdEvent.loaded) {
+          final bannerSize = await AdmobUtil.getSmartBannerSize();
           setState(() {
-            _adShown = true;
+            _bannerSize = bannerSize;
           });
         } else if (event == MobileAdEvent.failedToLoad) {
           setState(() {
-            _adShown = false;
+            _bannerSize = null;
           });
         }
       },
@@ -86,7 +94,7 @@ class SimpleBannerAdState extends State<SimpleBannerAd> {
   }
 
   _showBannerAd() async {
-    if (await AdmobUtil.isTestDevice || _adShown) {
+    if (await AdmobUtil.isTestDevice || _bannerSize != null) {
       return;
     }
 

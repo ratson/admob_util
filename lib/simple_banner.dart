@@ -29,6 +29,26 @@ class SimpleBannerAd extends StatefulWidget {
   final MobileAdTargetingInfo targetingInfo;
   final MobileAdListener listener;
 
+  SimpleBannerAd.initialize({
+    this.child,
+    this.adUnitId,
+    this.listener,
+    String appId,
+    bool childDirected,
+    String contentUrl,
+    List<String> keywords,
+    bool nonPersonalizedAds,
+    List<String> testDevices,
+  }) : this.targetingInfo = MobileAdTargetingInfo(
+          childDirected: childDirected,
+          contentUrl: contentUrl,
+          keywords: keywords,
+          nonPersonalizedAds: nonPersonalizedAds,
+          testDevices: testDevices,
+        ) {
+    FirebaseAdMob.instance.initialize(appId: appId);
+  }
+
   @override
   State<StatefulWidget> createState() => SimpleBannerAdState();
 
@@ -64,8 +84,8 @@ class SimpleBannerAdState extends State<SimpleBannerAd> {
   Widget build(BuildContext context) {
     return Padding(
       child: _BannerStateHolder(state: this, child: widget.child),
-      padding: EdgeInsets.only(
-          bottom: _bannerSize == null ? 0 : _bannerSize.height),
+      padding:
+          EdgeInsets.only(bottom: _bannerSize == null ? 0 : _bannerSize.height),
     );
   }
 

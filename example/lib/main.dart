@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:admob_util/admob_util.dart';
+import 'package:admob_util/simple_banner.dart';
 
-void main() => runApp(MyApp());
+final _appId = FirebaseAdMob.testAppId;
+final _bannerId = BannerAd.testAdUnitId;
+final _testDevices = <String>[];
+
+final _targetingInfo = MobileAdTargetingInfo(
+  childDirected: false,
+  testDevices: _testDevices,
+  nonPersonalizedAds: true,
+);
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  FirebaseAdMob.instance.initialize(appId: _appId);
+  runApp(SimpleBannerAd(
+    child: MyApp(),
+    adUnitId: _bannerId,
+    targetingInfo: _targetingInfo,
+  ));
+}
 
 class MyApp extends StatefulWidget {
   @override
